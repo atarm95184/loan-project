@@ -19,6 +19,7 @@
             background-color: #f4fbff;
             padding: 24px;
             color: #1e2c3b;
+            text-align: center;
         }
 
         h1 {
@@ -38,7 +39,10 @@
             background-color: #ffffff;
             border-radius: 10px;
             margin-bottom: 24px;
-            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6);
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+        }
+        .result{
+            box-shadow: 10px 10px rgb(83, 131, 165);
         }
 
         .form-row {
@@ -70,31 +74,88 @@
             margin-top: 20px;
             font-size: 1rem;
             font-weight: 900;
-            border: none ;
-             color: #f4fbff;
+            border: none;
+            color: #f4fbff;
             background-color: #316092;
             cursor: pointer;
-            transition: background-color 0.3s ;  /* 過渡動畫搭配hover */
+            transition: background-color 0.3s;
+            /* 過渡動畫搭配hover */
         }
-        #claBtn:hover{
-            background-color: #b0d4ee;
 
-        } 
+        #claBtn:hover {
+            background-color: #244a71;
 
-        input[type="radio"]{
+        }
+
+        input[type="radio"] {
             width: 16px;
             height: 16px;
             accent-color: rgb(82, 47, 209);
         }
-        h1,h2{
+
+        h1,
+        h2 {
             font-size: 2rem;
             color: #316092;
             margin-bottom: 1rem;
         }
-        h2{
-         font-size: 1.5rem;   
+
+        h2 {
+            font-size: 1.5rem;
         }
-      
+
+        .summary-table,
+        .detial-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+        }
+
+        .detial-table th {
+            background-color: #063e5f;
+            color: #ffff;
+            padding: 10px;
+        }
+
+        .detial-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #e5f6ff;
+        }
+
+        .summary-table td:first-child {
+            color: #0d5f2c;
+            font-weight: bold;
+        }
+
+
+
+
+        .detial-table tr:nth-child(even) {
+            background-color: #094f9e;
+            color: #c9b610;
+        }
+
+
+        .summary-table th {
+            background-color: #2708d6;
+            color: #7fdae0;
+        }
+
+
+
+        .summary-table th,
+        .summary-table td {
+            border: 1px solid #eef2f5;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        .subtitle {
+            font: 0.5em sans-serif;
+            color: #6a8ba2;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
     </style>
 
 
@@ -102,7 +163,10 @@
 
 <body>
     <div class="container">
-        <h1>貸款試算APP. V0.1</h1>
+        <h1>貸款精算助手
+            <span class="subtitle">輸入條件，快速分析您的還款計畫</span>
+
+        </h1>
         <hr>
         <form id="loanForm" action="" class="loan-form">
             <div class="form-row">
@@ -146,7 +210,7 @@
 
 
             <!-- 摘要表格 -->
-            <table border="1">
+            <table class="summary-table">
                 <thead>
                     <tr>
                         <th>項目</th>
@@ -156,20 +220,20 @@
                 <tbody>
                     <tr>
                         <td>每月還款金額</td>
-                        <td id="monthlyPayment">--</td>
+                        <td id="monthlyPayment">6666</td>
                     </tr>
                     <tr>
                         <td>總還款金額</td>
-                        <td id="totalPayment">--</td>
+                        <td id="totalPayment">166666</td>
                     </tr>
                     <tr>
                         <td>總利息支出</td>
-                        <td id="totalInterest">--</td>
+                        <td id="totalInterest">3666666</td>
                     </tr>
                 </tbody>
             </table>
             <!-- 分期明細表格 -->
-            <table border="1">
+            <table border="1" class="detial-table">
                 <thead>
                     <tr>
                         <th>期數</th>
@@ -180,7 +244,34 @@
                     </tr>
                 </thead>
                 <tbody id="scheduleBody">
-                    <!-- JavaScript 動⼊填入 -->
+                    <tr> <!-- JavaScript 動⼊填入 -->
+                        <td>1</td>
+                        <td>10000</td>
+                        <td>100000</td>
+                        <td>6666</td>
+                        <td>1000000</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>10000</td>
+                        <td>100000</td>
+                        <td>6666</td>
+                        <td>1000000</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>10000</td>
+                        <td>100000</td>
+                        <td>6666</td>
+                        <td>1000000</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>10000</td>
+                        <td>100000</td>
+                        <td>6666</td>
+                        <td>1000000</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
