@@ -14,29 +14,79 @@
             padding: 0;
         }
 
-        body{
-        font-family: sans-serif;
-        background-color: #f4fbff ;
-        padding: 24px;
-        color: #1e2c3b;
+        body {
+            font-family: sans-serif;
+            background-color: #f4fbff;
+            padding: 24px;
+            color: #1e2c3b;
         }
 
-        h1{
-            font-size: 1.6rem ;
+        h1 {
+            font-size: 1.6rem;
             color: rgb(1, 1, 165);
-            margin-bottom: 1rem ;
+            margin-bottom: 1rem;
         }
-        .container{
+
+        .container {
             max-width: 900px;
             margin: 0 auto;
 
         }
-        .loan-form, .result{
+
+        .loan-form,
+        .result {
             background-color: #ffffff;
-            border-radius: 10px ;
+            border-radius: 10px;
             margin-bottom: 24px;
-            box-shadow:  10px 10px 10px rgba(red, green, blue, alpha);
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6);
         }
+
+        .form-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .form-row label {
+            width: 90px;
+            font-weight: bold;
+            color: #609ec2;
+        }
+
+        input[type="number"],
+        select {
+            padding: 8px 10px;
+            border: 1px solid #b0d4ee;
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 180px;
+        }
+
+        #claBtn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            font-size: 1rem;
+            font-weight: 900;
+            border: none ;
+             color: #f4fbff;
+            background-color: #316092;
+            cursor: pointer;
+            transition: background-color 0.3s ;  /* 過渡動畫搭配hover */
+        }
+        #claBtn:hover{
+            background-color: #b0d4ee;
+
+        } 
+
+        input[type="radio"]{
+            width: 16px;
+            height: 16px;
+            accent-color: rgb(82, 47, 209);
+        }
+      
     </style>
 
 
@@ -66,7 +116,7 @@
                 <select name="loanYears" id="loanYears">
                     <option value="3">3</option>
                     <option value="5">5</option>
-                    <option value="7">7</option>
+                    <option value="7" selected>7</option>
                     <option value="10">10</option>
                     <option value="15">15</option>
                     <option value="20">20</option>
@@ -74,7 +124,7 @@
                     <option value="40">40</option>
                 </select> 年
             </div>
-            <div class="form-row">
+            <div class="radio">
                 <label for="repayment">還款方式</label>
                 <input type="radio" id="repayment1" name="repayment" value="repaymentMathod1" checked>本息平均攤還
                 <input type="radio" id="repayment2" name="repayment" value="repaymentMathod2">本金平均攤還
