@@ -41,7 +41,8 @@
             margin-bottom: 24px;
             box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
         }
-        .result{
+
+        .result {
             box-shadow: 10px 10px rgb(83, 131, 165);
         }
 
@@ -178,7 +179,7 @@
                 <input type="number" id="rate" name="rate" value="1.85" step="0.01" min="1" required>%
             </div>
             <!-- 新增手續費用欄位 habdingFree -->
-         
+
             <div class="form-row">
                 <label for="loanYears">貸款年限</label>
                 <select name="loanYears" id="loanYears">
@@ -194,10 +195,11 @@
             </div>
             <div class="form-row">
                 <label for="repayment">還款方式</label>
-                <input type="radio" id="repayment1" name="repayment" value="repaymentMathod1" checked>本息平均攤還
-                <input type="radio" id="repayment2" name="repayment" value="repaymentMathod2">本金平均攤還
+                <input type="radio" id="repayment1" name="repayment" value="repaymentMethod1" checked>本息平均攤還
+                <input type="radio" id="repayment2" name="repayment" value="repaymentMethod2">本金平均攤還
             </div>
-            <button type="submit" id="claBtn">計算</button>
+            <!-- 後端才需要submit -->
+            <button type="button" id="claBtn">計算</button>
         </form>
 
         <div class="result">
@@ -272,6 +274,40 @@
             </table>
         </div>
     </div>
+
+    <script>
+        const title = document.querySelector("h1")
+        console.log(title)
+        title.style.color = "red";
+        //修改內容 
+        // 1.只改文字 
+        title.innerText = "超級助手!!!";
+        //2.含標籤語法
+        title.innerHTML = "<b style='background-color:blue'>超級助手!!!</b>";
+
+        const amountEl = document.querySelector("#amount");
+        const rateEl = document.querySelector("#rate");
+        const loanYearsEl = document.querySelector("#loanYears");
+        const claBtnEl = document.querySelector("#claBtn");
+        console.log(amountEl, rateEl, loanYearsEl, claBtnEl);
+
+        claBtn.addEventListener("click", function (e) {
+            let amount = amountEl.value;
+            let rate = rateEl.value;
+            let loanYears = loanYearsEl.value;
+            //多個radio共用name的取直方式
+            let method = document.querySelector(
+                "input[name='repayment']:checked"
+
+
+            ).value;
+
+
+            console.log(amount, rate, loanYears, method);
+        });
+
+    </script>
+
 </body>
 
 </html>
