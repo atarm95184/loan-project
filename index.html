@@ -295,6 +295,7 @@
             let amount = amountEl.value;
             let rate = rateEl.value;
             let loanYears = loanYearsEl.value;
+
             //多個radio共用name的取直方式
             let method = document.querySelector(
                 "input[name='repayment']:checked"
@@ -304,7 +305,39 @@
 
             console.log(amount, rate, loanYears, method);
             repaymentMethod1(amount * 10000, rate, loanYears)
+
+
+            let schedules = repaymentMethod1(amount * 10000, rate, loanYears);
+
+            renderTable(schedules);
+
         });
+
+        // 繪製table
+        function renderTable(schedules) {
+            let tableHtml = "";
+
+
+            for (let i = 0; i < schedules.length; i++) {
+                tableHtml += `
+                    <tr>
+                        <td> ${schedules[i].month}</td>
+                        <td> ${schedules[i].monthlyPayment + schedules[i].interest}</td>
+                        <td> ${schedules[i].monthlyPayment}</td>
+                        <td> ${schedules[i].interest}</td>
+                        <td> ${schedules[i].amount}</td>
+                    </tr>
+                `;
+            }
+
+
+            console.log(tableHtml);
+
+            document.querySelector("#scheduleBody").innerHTML = tableHtml;
+        }
+
+
+
 
         function repaymentMethod1(amount, rate, years) {
 
@@ -316,30 +349,30 @@
 
             schedules = [];
             for (let i = 0; i < months; i++) {
+
                 let interest = Math.round(amount * monthRate);
                 amount -= monthlyPayment;
-                     //最後一期
+                //最後一期
                 if (i == months - 1) {
                     monthlyPayment += amount;
                     amount = 0;
                 }
                 console.log(`${i + 1} 本金:${monthlyPayment} 利息:${interest} 剩餘餘額:${amount}`);
                 schedules.push(
-                {
-                    "month":i+1,
-                    "monthlyPayment" : monthlyPayment,
-                    "interest":interest,
-                    "amount":amount
-
-
-
-                }
+                    {
+                        "month": i + 1,
+                        "monthlyPayment": monthlyPayment,
+                        "interest": interest,
+                        "amount": amount
+                    }
 
                 );
             }
 
 
+            console.log(schedules);
 
+            return schedules;
 
 
 
