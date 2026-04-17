@@ -1,385 +1,409 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="Zh-tw">
-
-
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>貸款試算網站</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-        body {
-            font-family: sans-serif;
-            background-color: #f4fbff;
-            padding: 24px;
-            color: #1e2c3b;
-            text-align: center;
-        }
+      body {
+        font-family: sans-serif;
+        background-color: #f4fbff;
+        padding: 24px;
+        color: #1e2c3b;
+        text-align: center;
+      }
 
-        h1 {
-            font-size: 1.6rem;
-            color: rgb(1, 1, 165);
-            margin-bottom: 1rem;
-        }
+      h1 {
+        font-size: 1.6rem;
+        color: rgb(1, 1, 165);
+        margin-bottom: 1rem;
+      }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
 
-        }
+      .loan-form,
+      .result {
+        background-color: #ffffff;
+        border-radius: 10px;
+        margin-bottom: 24px;
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+      }
 
-        .loan-form,
-        .result {
-            background-color: #ffffff;
-            border-radius: 10px;
-            margin-bottom: 24px;
-            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
-        }
+      .result {
+        box-shadow: 10px 10px rgb(83, 131, 165);
+      }
 
-        .result {
-            box-shadow: 10px 10px rgb(83, 131, 165);
-        }
+      .form-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
 
-        .form-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
+      .form-row label {
+        width: 90px;
+        font-weight: bold;
+        color: #609ec2;
+      }
 
-        .form-row label {
-            width: 90px;
-            font-weight: bold;
-            color: #609ec2;
-        }
+      input[type="number"],
+      select {
+        padding: 8px 10px;
+        border: 1px solid #b0d4ee;
+        border-radius: 6px;
+        font-size: 1rem;
+        width: 180px;
+      }
 
-        input[type="number"],
-        select {
-            padding: 8px 10px;
-            border: 1px solid #b0d4ee;
-            border-radius: 6px;
-            font-size: 1rem;
-            width: 180px;
-        }
+      #claBtn {
+        width: 100%;
+        padding: 12px;
+        margin-top: 20px;
+        font-size: 1rem;
+        font-weight: 900;
+        border: none;
+        color: #f4fbff;
+        background-color: #316092;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        /* 過渡動畫搭配hover */
+      }
 
-        #claBtn {
-            width: 100%;
-            padding: 12px;
-            margin-top: 20px;
-            font-size: 1rem;
-            font-weight: 900;
-            border: none;
-            color: #f4fbff;
-            background-color: #316092;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            /* 過渡動畫搭配hover */
-        }
+      #claBtn:hover {
+        background-color: #244a71;
+      }
 
-        #claBtn:hover {
-            background-color: #244a71;
+      input[type="radio"] {
+        width: 16px;
+        height: 16px;
+        accent-color: rgb(82, 47, 209);
+      }
 
-        }
+      h1,
+      h2 {
+        font-size: 2rem;
+        color: #316092;
+        margin-bottom: 1rem;
+      }
 
-        input[type="radio"] {
-            width: 16px;
-            height: 16px;
-            accent-color: rgb(82, 47, 209);
-        }
+      h2 {
+        font-size: 1.5rem;
+      }
 
-        h1,
-        h2 {
-            font-size: 2rem;
-            color: #316092;
-            margin-bottom: 1rem;
-        }
+      .summary-table,
+      .detial-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 24px;
+      }
 
-        h2 {
-            font-size: 1.5rem;
-        }
+      .detial-table th {
+        background-color: #063e5f;
+        color: #ffff;
+        padding: 10px;
+      }
 
-        .summary-table,
-        .detial-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 24px;
-        }
+      .detial-table td {
+        padding: 8px 10px;
+        border-bottom: 1px solid #e5f6ff;
+      }
 
-        .detial-table th {
-            background-color: #063e5f;
-            color: #ffff;
-            padding: 10px;
-        }
+      .summary-table td:first-child {
+        color: #0d5f2c;
+        font-weight: bold;
+      }
 
-        .detial-table td {
-            padding: 8px 10px;
-            border-bottom: 1px solid #e5f6ff;
-        }
+      .detial-table tr:nth-child(even) {
+        background-color: #094f9e;
+        color: #c9b610;
+      }
 
-        .summary-table td:first-child {
-            color: #0d5f2c;
-            font-weight: bold;
-        }
+      .summary-table th {
+        background-color: #2708d6;
+        color: #7fdae0;
+      }
 
+      .summary-table th,
+      .summary-table td {
+        border: 1px solid #eef2f5;
+        padding: 10px 12px;
+        text-align: left;
+      }
 
+      .subtitle {
+        font: 0.5em sans-serif;
+        color: #6a8ba2;
+        font-weight: 400;
+        letter-spacing: 1px;
+      }
 
-
-        .detial-table tr:nth-child(even) {
-            background-color: #094f9e;
-            color: #c9b610;
-        }
-
-
-        .summary-table th {
-            background-color: #2708d6;
-            color: #7fdae0;
-        }
-
-
-
-        .summary-table th,
-        .summary-table td {
-            border: 1px solid #eef2f5;
-            padding: 10px 12px;
-            text-align: left;
-        }
-
-        .subtitle {
-            font: 0.5em sans-serif;
-            color: #6a8ba2;
-            font-weight: 400;
-            letter-spacing: 1px;
-        }
+      #table-scroll {
+        max-height: 600px;
+        overflow-y: auto;
+        border: 2px solid rgb(85, 52, 3);
+      }
     </style>
+  </head>
 
-
-</head>
-
-<body>
+  <body>
     <div class="container">
-        <h1>貸款精算助手
-            <span class="subtitle">輸入條件，快速分析您的還款計畫</span>
-
-        </h1>
-        <hr>
-        <form id="loanForm" action="" class="loan-form">
-            <div class="form-row">
-                <label for="amount">貸款金額</label>
-                <input type="number" id="amount" name="amount" value="100" step="10" min="10" required>萬
-            </div>
-            <div class="form-row">
-                <label for="rate">貸款利率</label>
-                <input type="number" id="rate" name="rate" value="1.85" step="0.01" min="1" required>%
-            </div>
-            <!-- 新增手續費用欄位 habdingFree -->
-
-            <div class="form-row">
-                <label for="loanYears">貸款年限</label>
-                <select name="loanYears" id="loanYears">
-                    <option value="3">3</option>
-                    <option value="5">5</option>
-                    <option value="7" selected>7</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                    <option value="30">30</option>
-                    <option value="40">40</option>
-                </select> 年
-            </div>
-            <div class="form-row">
-                <label for="repayment">還款方式</label>
-                <input type="radio" id="repayment1" name="repayment" value="repaymentMethod1" checked>本金平均攤還
-                <input type="radio" id="repayment2" name="repayment" value="repaymentMethod2">本息平均攤還
-            </div>
-            <!-- 後端才需要submit -->
-            <button type="button" id="claBtn">計算</button>
-        </form>
-
-        <div class="result">
-            <h2>試算結果</h2>
-
-
-
-            <!-- 摘要表格 -->
-            <table class="summary-table">
-                <thead>
-                    <tr>
-                        <th>項目</th>
-                        <th>金額</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>每月還款金額</td>
-                        <td id="monthlyPayment">6666</td>
-                    </tr>
-                    <tr>
-                        <td>總還款金額</td>
-                        <td id="totalPayment">166666</td>
-                    </tr>
-                    <tr>
-                        <td>總利息支出</td>
-                        <td id="totalInterest">3666666</td>
-                    </tr>
-                </tbody>
-            </table>
-            <!-- 分期明細表格 -->
-            <table border="1" class="detial-table">
-                <thead>
-                    <tr>
-                        <th>期數</th>
-                        <th>⽉付金額</th>
-                        <th>本金</th>
-                        <th>利息</th>
-                        <th>剩餘本金</th>
-                    </tr>
-                </thead>
-                <tbody id="scheduleBody">
-                    <tr> <!-- JavaScript 動⼊填入 -->
-                        <td>1</td>
-                        <td>10000</td>
-                        <td>100000</td>
-                        <td>6666</td>
-                        <td>1000000</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>10000</td>
-                        <td>100000</td>
-                        <td>6666</td>
-                        <td>1000000</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>10000</td>
-                        <td>100000</td>
-                        <td>6666</td>
-                        <td>1000000</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>10000</td>
-                        <td>100000</td>
-                        <td>6666</td>
-                        <td>1000000</td>
-                    </tr>
-                </tbody>
-            </table>
+      <h1>
+        貸款精算助手
+        <span class="subtitle">輸入條件，快速分析您的還款計畫</span>
+      </h1>
+      <hr />
+      <form id="loanForm" action="" class="loan-form">
+        <div class="form-row">
+          <label for="amount">貸款金額</label>
+          <input
+            type="number"
+            id="amount"
+            name="amount"
+            value="100"
+            step="10"
+            min="10"
+            required
+          />萬
         </div>
+        <div class="form-row">
+          <label for="rate">貸款利率</label>
+          <input
+            type="number"
+            id="rate"
+            name="rate"
+            value="1.85"
+            step="0.01"
+            min="1"
+            required
+          />%
+        </div>
+        <!-- 新增手續費用欄位 habdingFree -->
+
+        <div class="form-row">
+          <label for="loanYears">貸款年限</label>
+          <select name="loanYears" id="loanYears">
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="7" selected>7</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+          </select>
+          年
+        </div>
+        <div class="form-row">
+          <label for="repayment">還款方式</label>
+          <input
+            type="radio"
+            id="repayment1"
+            name="repayment"
+            value="repaymentMethod1"
+            checked
+          />本金平均攤還
+          <input
+            type="radio"
+            id="repayment2"
+            name="repayment"
+            value="repaymentMethod2"
+          />本息平均攤還
+        </div>
+        <!-- 後端才需要submit -->
+        <button type="button" id="claBtn">計算</button>
+      </form>
+
+      <div class="result">
+        <h2>試算結果</h2>
+
+        <!-- 摘要表格 -->
+        <table class="summary-table">
+          <thead>
+            <tr>
+              <th>項目</th>
+              <th>金額</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>每月還款金額</td>
+              <td id="monthlyPayment">-</td>
+            </tr>
+            <tr>
+              <td>總還款金額</td>
+              <td id="totalPayment">-</td>
+            </tr>
+            <tr>
+              <td>總利息支出</td>
+              <td id="totalInterest">-</td>
+            </tr>
+          </tbody>
+        </table>
+        <div id="table-scroll">
+          <!-- 分期明細表格 -->
+          <table border="1" class="detial-table">
+            <thead>
+              <tr>
+                <th>期數</th>
+                <th>⽉付金額</th>
+                <th>本金</th>
+                <th>利息</th>
+                <th>剩餘本金</th>
+              </tr>
+            </thead>
+            <tbody id="scheduleBody">
+              <tr>
+                <!-- JavaScript 動⼊填入 -->
+                <td>1</td>
+                <td>10000</td>
+                <td>100000</td>
+                <td>6666</td>
+                <td>1000000</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>10000</td>
+                <td>100000</td>
+                <td>6666</td>
+                <td>1000000</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>10000</td>
+                <td>100000</td>
+                <td>6666</td>
+                <td>1000000</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>10000</td>
+                <td>100000</td>
+                <td>6666</td>
+                <td>1000000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
     <script>
-        const title = document.querySelector("h1")
-        console.log(title)
-        title.style.color = "red";
-        //修改內容 
-        // 1.只改文字 
-        title.innerText = "超級助手!!!";
-        //2.含標籤語法
-        title.innerHTML = "<b style='background-color:blue'>超級助手!!!</b>";
+      const title = document.querySelector("h1");
+      console.log(title);
+      title.style.color = "red";
+      //修改內容
+      // 1.只改文字
+      //title.innerText = "超級助手!!!";
+      //2.含標籤語法
+      //title.innerHTML = "<b style='background-color:blue'>超級助手!!!</b>";
 
-        const amountEl = document.querySelector("#amount");
-        const rateEl = document.querySelector("#rate");
-        const loanYearsEl = document.querySelector("#loanYears");
-        const claBtnEl = document.querySelector("#claBtn");
-        console.log(amountEl, rateEl, loanYearsEl, claBtnEl);
+      const amountEl = document.querySelector("#amount");
+      const rateEl = document.querySelector("#rate");
+      const loanYearsEl = document.querySelector("#loanYears");
+      const claBtnEl = document.querySelector("#claBtn");
+      console.log(amountEl, rateEl, loanYearsEl, claBtnEl);
 
-        claBtn.addEventListener("click", function (e) {
-            let amount = amountEl.value;
-            let rate = rateEl.value;
-            let loanYears = loanYearsEl.value;
+      claBtn.addEventListener("click", function (e) {
+        let amount = amountEl.value;
+        let rate = rateEl.value;
+        let loanYears = loanYearsEl.value;
 
-            //多個radio共用name的取直方式
-            let method = document.querySelector(
-                "input[name='repayment']:checked"
+        //多個radio共用name的取直方式
+        let method = document.querySelector(
+          "input[name='repayment']:checked",
+        ).value;
 
+        console.log(amount, rate, loanYears, method);
+        repaymentMethod1(amount * 10000, rate, loanYears);
 
-            ).value;
+        let schedules = repaymentMethod1(amount * 10000, rate, loanYears);
 
-            console.log(amount, rate, loanYears, method);
-            repaymentMethod1(amount * 10000, rate, loanYears)
+        renderSummary(schedules);
+        renderTable(schedules);
+      });
 
+      function renderSummary(schedules) {
+        const monthlyPaymentEl = document.querySelector("#monthlyPayment");
+        const totalPaymentEl = document.querySelector("#totalPayment");
+        const totalInterestEl = document.querySelector("#totalInterest");
 
-            let schedules = repaymentMethod1(amount * 10000, rate, loanYears);
+        console.log(monthlyPaymentEl, totalPaymentEl, totalInterestEl);
 
-            renderTable(schedules);
+        monthlyPaymentEl.innerText = `第一個月 :${schedules[0].monthlyPayment + schedules[0].interest}`;
 
-        });
-
-        // 繪製table
-        function renderTable(schedules) {
-            let tableHtml = "";
-
-
-            for (let i = 0; i < schedules.length; i++) {
-                tableHtml += `
-                    <tr>
-                        <td> ${schedules[i].month}</td>
-                        <td> ${schedules[i].monthlyPayment + schedules[i].interest}</td>
-                        <td> ${schedules[i].monthlyPayment}</td>
-                        <td> ${schedules[i].interest}</td>
-                        <td> ${schedules[i].amount}</td>
-                    </tr>
-                `;
-            }
-
-
-            console.log(tableHtml);
-
-            document.querySelector("#scheduleBody").innerHTML = tableHtml;
+        let totalInterest = 0,
+          totalPayment = 0;
+        for (let i = 0; i < schedules.length; i++) {
+          totalInterest += schedules[i].interest;
+          totalPayment += schedules[i].monthlyPayment;
         }
 
+        console.log(totalInterest, totalPayment);
+        totalPaymentEl.innerHTML = `<b style='color:bule'>${totalPayment + totalInterest}元</b>`;
+        totalInterestEl.innerHTML = `<b style='color:red'>${totalInterest}元</b>`;
+      }
 
+      // 繪製table
+      function renderTable(schedules) {
+        let tableHtml = "";
 
-
-        function repaymentMethod1(amount, rate, years) {
-
-            let monthRate = rate / 100 / 12; //月利率
-            let months = years * 12; //
-            let monthlyPayment = Math.round(amount / months);
-            console.log(monthRate, months, monthlyPayment);
-
-
-            schedules = [];
-            for (let i = 0; i < months; i++) {
-
-                let interest = Math.round(amount * monthRate);
-                amount -= monthlyPayment;
-                //最後一期
-                if (i == months - 1) {
-                    monthlyPayment += amount;
-                    amount = 0;
-                }
-                console.log(`${i + 1} 本金:${monthlyPayment} 利息:${interest} 剩餘餘額:${amount}`);
-                schedules.push(
-                    {
-                        "month": i + 1,
-                        "monthlyPayment": monthlyPayment,
-                        "interest": interest,
-                        "amount": amount
-                    }
-
-                );
-            }
-
-
-            console.log(schedules);
-
-            return schedules;
-
-
-
+        for (let i = 0; i < schedules.length; i++) {
+          tableHtml += `
+                  <tr>
+                      <td> ${schedules[i].month}</td>
+                      <td> ${schedules[i].monthlyPayment + schedules[i].interest}</td>
+                      <td> ${schedules[i].monthlyPayment}</td>
+                      <td> ${schedules[i].interest}</td>
+                      <td> ${schedules[i].amount}</td>
+                  </tr>
+              `;
         }
 
+        // console.log(tableHtml);
+
+        document.querySelector("#scheduleBody").innerHTML = tableHtml;
+      }
+
+      function repaymentMethod1(amount, rate, years) {
+        let monthRate = rate / 100 / 12; //月利率
+        let months = years * 12; //
+        let monthlyPayment = Math.round(amount / months);
+        console.log(monthRate, months, monthlyPayment);
+
+        schedules = [];
+        for (let i = 0; i < months; i++) {
+          let interest = Math.round(amount * monthRate);
+          amount -= monthlyPayment;
+          //最後一期
+          if (i == months - 1) {
+            monthlyPayment += amount;
+            amount = 0;
+          }
+          console.log(
+            `${i + 1} 本金:${monthlyPayment} 利息:${interest} 剩餘餘額:${amount}`,
+          );
+          schedules.push({
+            month: i + 1,
+            monthlyPayment: monthlyPayment,
+            interest: interest,
+            amount: amount,
+          });
+        }
+
+        console.log(schedules);
+
+        return schedules;
+      }
     </script>
-
-</body>
-
+  </body>
 </html>
