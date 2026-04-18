@@ -4,155 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>貸款試算網站</title>
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
 
-      body {
-        font-family: sans-serif;
-        background-color: #f4fbff;
-        padding: 24px;
-        color: #1e2c3b;
-        text-align: center;
-      }
-
-      h1 {
-        font-size: 1.6rem;
-        color: rgb(1, 1, 165);
-        margin-bottom: 1rem;
-      }
-
-      .container {
-        max-width: 900px;
-        margin: 0 auto;
-      }
-
-      .loan-form,
-      .result {
-        background-color: #ffffff;
-        border-radius: 10px;
-        margin-bottom: 24px;
-        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
-      }
-
-      .result {
-        box-shadow: 10px 10px rgb(83, 131, 165);
-      }
-
-      .form-row {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 16px;
-      }
-
-      .form-row label {
-        width: 90px;
-        font-weight: bold;
-        color: #609ec2;
-      }
-
-      input[type="number"],
-      select {
-        padding: 8px 10px;
-        border: 1px solid #b0d4ee;
-        border-radius: 6px;
-        font-size: 1rem;
-        width: 180px;
-      }
-
-      #claBtn {
-        width: 100%;
-        padding: 12px;
-        margin-top: 20px;
-        font-size: 1rem;
-        font-weight: 900;
-        border: none;
-        color: #f4fbff;
-        background-color: #316092;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        /* 過渡動畫搭配hover */
-      }
-
-      #claBtn:hover {
-        background-color: #244a71;
-      }
-
-      input[type="radio"] {
-        width: 16px;
-        height: 16px;
-        accent-color: rgb(82, 47, 209);
-      }
-
-      h1,
-      h2 {
-        font-size: 2rem;
-        color: #316092;
-        margin-bottom: 1rem;
-      }
-
-      h2 {
-        font-size: 1.5rem;
-      }
-
-      .summary-table,
-      .detial-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 24px;
-      }
-
-      .detial-table th {
-        background-color: #063e5f;
-        color: #ffff;
-        padding: 10px;
-      }
-
-      .detial-table td {
-        padding: 8px 10px;
-        border-bottom: 1px solid #e5f6ff;
-      }
-
-      .summary-table td:first-child {
-        color: #0d5f2c;
-        font-weight: bold;
-      }
-
-      .detial-table tr:nth-child(even) {
-        background-color: #094f9e;
-        color: #c9b610;
-      }
-
-      .summary-table th {
-        background-color: #2708d6;
-        color: #7fdae0;
-      }
-
-      .summary-table th,
-      .summary-table td {
-        border: 1px solid #eef2f5;
-        padding: 10px 12px;
-        text-align: left;
-      }
-
-      .subtitle {
-        font: 0.5em sans-serif;
-        color: #6a8ba2;
-        font-weight: 400;
-        letter-spacing: 1px;
-      }
-
-      #table-scroll {
-        max-height: 600px;
-        overflow-y: auto;
-        border: 2px solid rgb(85, 52, 3);
-      }
-    </style>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/utils.js"></script>
+    引用外部邏輯
   </head>
 
   <body>
@@ -220,11 +75,14 @@
           />本息平均攤還
         </div>
         <!-- 後端才需要submit -->
-        <button type="button" id="claBtn">計算</button>
+        <button type="button" id="clacBtn">計算</button>
       </form>
 
       <div class="result">
-        <h2>試算結果</h2>
+        <h2>
+          試算結果
+          <button type="button" id="exportBtn">輸出CSV</button>
+        </h2>
 
         <!-- 摘要表格 -->
         <table class="summary-table">
@@ -298,22 +156,39 @@
     </div>
 
     <script>
-      const title = document.querySelector("h1");
-      console.log(title);
-      title.style.color = "red";
-      //修改內容
-      // 1.只改文字
-      //title.innerText = "超級助手!!!";
-      //2.含標籤語法
-      //title.innerHTML = "<b style='background-color:blue'>超級助手!!!</b>";
-
+      let schedules = [];
       const amountEl = document.querySelector("#amount");
       const rateEl = document.querySelector("#rate");
       const loanYearsEl = document.querySelector("#loanYears");
-      const claBtnEl = document.querySelector("#claBtn");
-      console.log(amountEl, rateEl, loanYearsEl, claBtnEl);
+      const clacBtnEl = document.querySelector("#clacBtn");
+      const exportBtnEl = document.querySelector("#exportBtn");
 
-      claBtn.addEventListener("click", function (e) {
+      console.log(amountEl, rateEl, loanYearsEl, clacBtnEl, exportBtnEl);
+
+      exportBtnEl.addEventListener("click", function (e) {
+        console.log(schedules);
+
+        if (schedules.length == 0) {
+          alert("目前無資料，請先計算!");
+          return;
+        }
+        let data = [];
+        const header = ["期數", "⽉付金額", "本金", "利息", "剩餘本金"];
+
+        for (let i = 0; i < schedules.length; i++) {
+          data.push([
+            schedules[i].month,
+            schedules[i].monthlyPayment + schedules[i].interest,
+            schedules[i].monthlyPayment,
+            schedules[i].interest,
+            schedules[i].amount,
+          ]);
+        }
+        console.log(data);
+        downloadCSV(header, data);
+      });
+
+      clacBtn.addEventListener("click", function (e) {
         let amount = amountEl.value;
         let rate = rateEl.value;
         let loanYears = loanYearsEl.value;
@@ -324,9 +199,8 @@
         ).value;
 
         console.log(amount, rate, loanYears, method);
-        repaymentMethod1(amount * 10000, rate, loanYears);
 
-        let schedules = repaymentMethod1(amount * 10000, rate, loanYears);
+        schedules = repaymentMethod1(amount * 10000, rate, loanYears);
 
         renderSummary(schedules);
         renderTable(schedules);
